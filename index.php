@@ -74,6 +74,22 @@
         p.contact-info a:hover {
             text-decoration: underline;
         }
+        .footer {
+            background-color: #87cefa; 
+            color: #333; 
+            text-align: center; 
+            align-items:center; 
+            justify-content: center; 
+            padding: 8px 0; 
+            position: fixed; 
+            bottom: 0; 
+            width: 100%; 
+            font-family: 'Roboto', sans-serif; 
+            z-index: 1000; 
+}
+footer p {
+    margin: 0; 
+}
     </style>
 </head>
 <body>
@@ -99,6 +115,9 @@
             Para ajuda, entre em contato com: <a href="mailto:cdajuniorf@gmail.com">cdajuniorf@gmail.com</a>
         </p>
     </div>
+    <footer class="footer">
+    <p>&copy; 2024 Itamar Junior. Todos os direitos reservados.</p>
+</footer>
 </body>
 </html>
 

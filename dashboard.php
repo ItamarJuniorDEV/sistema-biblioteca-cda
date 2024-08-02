@@ -1,10 +1,20 @@
 <?php
 session_start();
+include 'config.php';
 
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: index.php');
     exit();
 }
+
+$usuario_id = $_SESSION['usuario_id'];
+$stmt = $conn->prepare("SELECT tipo_usuario, nome_usuario FROM usuarios WHERE id = :id");
+$stmt->bindParam(':id', $usuario_id);
+$stmt->execute();
+$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$tipo_usuario = $usuario['tipo_usuario'];
+$nome_usuario = $usuario['nome_usuario'];
 ?>
 
 <!DOCTYPE html>
@@ -98,6 +108,22 @@ if (!isset($_SESSION['usuario_id'])) {
         .info-section {
             margin-top: 40px;
         }
+        .footer {
+            background-color: #87cefa; 
+            color: #333; 
+            text-align: center; 
+            align-items:center; 
+            justify-content: center; 
+            padding: 8px 0; 
+            position: fixed; 
+            bottom: 0; 
+            width: 100%; 
+            font-family: 'Roboto', sans-serif; 
+            z-index: 1000;            
+        }
+        footer p {
+            margin: 0; 
+        }
     </style>
 </head>
 <body>
@@ -118,40 +144,47 @@ if (!isset($_SESSION['usuario_id'])) {
     
     <div class="container">
         <h1 class="text-center">Bem-vindo ao Sistema de Gerenciamento de Biblioteca</h1>
-        <p class="text-center">Olá, <?php echo $_SESSION['nome_usuario']; ?>!</p>
+        <p class="text-center">Olá, <?php echo htmlspecialchars($nome_usuario); ?>!</p>
 
-        <!-- Card Sections -->
         <div class="row mt-4">
+            <?php if ($tipo_usuario == 'Administrador' || $tipo_usuario == 'Secretaria') : ?>
             <div class="col-md-4">
                 <div class="card" data-toggle="tooltip" data-placement="top" title="Gerencie todos os livros no sistema">
                     <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" class="card-img-top" alt="Gerenciar Livros">
                     <div class="card-body">
                         <h5 class="card-title">Gerenciar Livros</h5>
                         <p class="card-text">Adicione, edite e remova livros do acervo.</p>
-                        <a href="#" class="btn btn-primary">Acessar</a>
+                        <a href="gerenciar_livros.php" class="btn btn-primary">Acessar</a>
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
+
+            <?php if ($tipo_usuario == 'Administrador') : ?>
             <div class="col-md-4">
                 <div class="card" data-toggle="tooltip" data-placement="top" title="Gerencie os usuários do sistema">
                     <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" class="card-img-top" alt="Gerenciar Usuários">
                     <div class="card-body">
                         <h5 class="card-title">Gerenciar Usuários</h5>
                         <p class="card-text">Adicione, edite e remova usuários do sistema.</p>
-                        <a href="#" class="btn btn-primary">Acessar</a>
+                        <a href="gerenciar_usuarios.php" class="btn btn-primary">Acessar</a>
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
+
+            <?php if ($tipo_usuario == 'Administrador' || $tipo_usuario == 'Secretaria') : ?>
             <div class="col-md-4">
                 <div class="card" data-toggle="tooltip" data-placement="top" title="Controle os empréstimos e devoluções">
                     <img src="https://cdn-icons-png.flaticon.com/512/2919/2919592.png" class="card-img-top" alt="Empréstimos e Devoluções">
                     <div class="card-body">
                         <h5 class="card-title">Empréstimos e Devoluções</h5>
                         <p class="card-text">Gerencie os empréstimos e devoluções de livros.</p>
-                        <a href="#" class="btn btn-primary">Acessar</a>
+                        <a href="emprestimos_devolucoes.php" class="btn btn-primary">Acessar</a>
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
 
         <div class="search-container text-center">
@@ -195,12 +228,13 @@ if (!isset($_SESSION['usuario_id'])) {
             </div>
         </div>
     </div>
+    <footer class="footer">
+    <p>&copy; 2024 Itamar Junior. Todos os direitos reservados.</p>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
