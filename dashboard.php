@@ -112,18 +112,19 @@ $nome_usuario = $usuario['nome_usuario'];
             background-color: #87cefa; 
             color: #333; 
             text-align: center; 
-            align-items:center; 
-            justify-content: center; 
             padding: 8px 0; 
             position: fixed; 
             bottom: 0; 
             width: 100%; 
             font-family: 'Roboto', sans-serif; 
-            z-index: 1000;            
-        }
-        footer p {
+            z-index: 1000;
+            left: 0; 
             margin: 0; 
-        }
+            box-sizing: border-box; 
+}
+footer p {
+    margin: 0; 
+}
     </style>
 </head>
 <body>
@@ -173,6 +174,17 @@ $nome_usuario = $usuario['nome_usuario'];
             </div>
             <?php endif; ?>
 
+            <div class="col-md-4">
+                <div class="card" data-toggle="tooltip" data-placement="top" title="Solicite um livro para leitura">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3575/3575814.png" class="card-img-top" alt="Solicitar Livro">
+                    <div class="card-body">
+                        <h5 class="card-title">Solicitar Livro</h5>
+                        <p class="card-text">Solicite um livro para leitura e aguarde a aprovação.</p>
+                        <a href="solicitacoes.php" class="btn btn-primary">Acessar</a>
+                    </div>
+                </div>
+            </div>
+
             <?php if ($tipo_usuario == 'Administrador' || $tipo_usuario == 'Secretaria') : ?>
             <div class="col-md-4">
                 <div class="card" data-toggle="tooltip" data-placement="top" title="Controle os empréstimos e devoluções">
@@ -180,7 +192,7 @@ $nome_usuario = $usuario['nome_usuario'];
                     <div class="card-body">
                         <h5 class="card-title">Empréstimos e Devoluções</h5>
                         <p class="card-text">Gerencie os empréstimos e devoluções de livros.</p>
-                        <a href="emprestimos_devolucoes.php" class="btn btn-primary">Acessar</a>
+                        <a href="emprestimos.php" class="btn btn-primary">Acessar</a>
                     </div>
                 </div>
             </div>
@@ -196,40 +208,23 @@ $nome_usuario = $usuario['nome_usuario'];
                 <div class="card-header" id="headingOne">
                     <h5 class="mb-0">
                         <button class="btn btn-link accordion-button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Lembrete Importante
+                            Horário de Solicitações
                         </button>
                     </h5>
                 </div>
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                    Para garantir que todos tenham a oportunidade de ler os livros, por favor, devolva-os dentro do prazo estipulado. A colaboração de todos é essencial para manter nosso acervo disponível para todos os usuários.
+                        <!-- Exibir horários de solicitações aqui -->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="infoModalLabel">Informação Importante</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Lembre-se de devolver os livros emprestados dentro do prazo para evitar multas. Em caso de dúvidas, entre em contato com a administração da biblioteca ou consulte o regulamento disponível no site.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
+        <footer class="footer">
+            <p>&copy; 2024 Itamar Junior. Todos os direitos reservados.</p>
+        </footer>
     </div>
-    <footer class="footer">
-    <p>&copy; 2024 Itamar Junior. Todos os direitos reservados.</p>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -237,15 +232,6 @@ $nome_usuario = $usuario['nome_usuario'];
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
-        });
-
-        $(document).ready(function() {
-            $("#search").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $(".card").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                });
-            });
         });
     </script>
 </body>
